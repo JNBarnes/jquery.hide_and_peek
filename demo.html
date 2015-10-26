@@ -17,10 +17,17 @@
     <script>
         $(document).ready(function(){
             init();
+            $("body").click(function(){
+                if(isPeekElementVisible()){
+                    hidePeekElement(1000);
+                }else{
+                    showPeekElement(1000);
+                }
+            });
         });
     </script>
 </head>
-<body>
+<body style="min-height: 500px">
 <div id="peek-element"></div>
 </body>
 </html>

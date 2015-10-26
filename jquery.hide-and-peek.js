@@ -7,7 +7,7 @@
 
 var oOptions = {
     peek_selector: "#peek-element",
-    position: "top",
+    position: "right",
     default_shown: true,
     center: true
 };
@@ -36,7 +36,7 @@ function init(){
         hidePeekElement(0);
     }
 
-    if(oOptions.position == "bottom"){
+    if(oOptions.position == "bottom" || oOptions.position == "right"){
         wrapPeekElement();
     }
 }
@@ -49,21 +49,34 @@ function wrapPeekElement(){
     var jqPeekWrapper = $("<div id='{0}' style='position:absolute; overflow: hidden;'></div>"
         .format(oOptions.peek_selector.replace("#", "")+"-wrapper"));
     var jqPeekElement = $(oOptions.peek_selector);
-    var objCSS = {
-        width: parseInt(jqPeekElement.width()),
-        height: parseInt(jqPeekElement.height()),
-        left: jqPeekElement.css("left"),
-        bottom: jqPeekElement.css("bottom")
-    };
+    var objWrapperCSS= {};
+    if(oOptions.position == "bottom"){
+        objWrapperCSS = {
+            width: parseInt(jqPeekElement.width()),
+            height: parseInt(jqPeekElement.height()),
+            left: jqPeekElement.css("left"),
+            bottom: 0
+        };
+    }else if(oOptions.position == "right"){
+        objWrapperCSS = {
+            width: parseInt(jqPeekElement.width()),
+            height: parseInt(jqPeekElement.height()),
+            top: jqPeekElement.css("top"),
+            right: 0
+        };
+    }
+
     jqPeekElement = $(oOptions.peek_selector).detach();
 
     jqPeekWrapper.append(jqPeekElement);
 
-    jqPeekWrapper.css(objCSS);
+    jqPeekWrapper.css(objWrapperCSS);
 
     jqPeekElement.css({
         left: "",
-        bottom: ""
+        bottom: "",
+        right:"",
+        top: ""
     });
     $("body").append(jqPeekWrapper);
 }
@@ -94,6 +107,7 @@ function hidePeekElement(intDuration) {
     var objAnimate = {}; //Cant use computed keys till ES2015 adopted
     objAnimate[oOptions.position] = getHiddenOffset() + "px";
     jqPeekElement.animate(objAnimate, intDuration);
+    jqPeekElement.data("hidden", "true");
 }
 
 function showPeekElement(intDuration) {
@@ -101,6 +115,7 @@ function showPeekElement(intDuration) {
     var objAnimate = {}; //Cant use computed keys till ES2015 adopted
     objAnimate[oOptions.position] = getShownOffset() + "px";
     jqPeekElement.animate(objAnimate, intDuration);
+    jqPeekElement.data("hidden", "false");
 }
 
 function getPeekDepth(){
@@ -132,7 +147,7 @@ function getHiddenOffset(){
             intOffset = (-1 * getPeekDepth());
             break;
         case "bottom":
-            intOffset = (getWindowSize().height + getPeekDepth());
+            intOffset = (-1 * getPeekDepth());
             break;
         case "left":
             intOffset = (0 - getPeekDepth());
@@ -151,7 +166,7 @@ function getShownOffset(){
             intOffset = 0;
             break;
         case "bottom":
-            intOffset = (getWindowSize().height);
+            intOffset = 0;
             break;
         case "left":
             intOffset = 0;
@@ -161,6 +176,11 @@ function getShownOffset(){
             break;
     }
     return intOffset;
+}
+
+function isPeekElementVisible(){
+    //Not sure I like this...
+    return $(oOptions.peek_selector).data("hidden") == "false";
 }
 
 /**
