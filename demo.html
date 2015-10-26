@@ -16,13 +16,9 @@
     </style>
     <script>
         $(document).ready(function(){
-            init();
-            $("body").click(function(){
-                if(isPeekElementVisible()){
-                    hidePeekElement(1000);
-                }else{
-                    showPeekElement(1000);
-                }
+            $("#peek-element").hide_and_peek("init");
+            $("#peek-element").click(function(evt){
+                $("#peek-element").hide_and_peek("toggle");
             });
         });
     </script>
