@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <title>Peek Demo</title>
     <script src="https://code.jquery.com/jquery-2.1.4.min.js" type="text/javascript"></script>
+    <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.js" type="text/javascript"></script>
+
     <script src="jquery.hide-and-peek.js" type="application/javascript"></script>
     <style>
         #peek-element{
@@ -15,12 +17,13 @@
 
     </style>
     <script>
+        var foo = {};
         $(document).ready(function(){
-            $("#peek-element").hide_and_peek("init", {
-                peek_position: "top",
+            foo = $("#peek-element").hide_and_peek({
+                peek_position:"top",
                 events:{
-                    click:function(evt){
-                        $(this).hide_and_peek("toggle");
+                    click: function(evt){
+                        foo.hide_and_peek("toggle");
                     }
                 }
             });
