@@ -71,6 +71,9 @@ String.prototype.format = function () {
 
             if(oOptions.center){
                 centerPeekElement();
+                $(window).resize(function (){
+                    centerPeekElement();
+                });
             }
 
             if(oOptions.default_shown){
