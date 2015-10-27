@@ -85,6 +85,10 @@ String.prototype.format = function () {
             if(oOptions.peek_position == "bottom" || oOptions.peek_position == "right"){
                 wrapPeekElement();
             }
+
+            if(typeof oOptions.events.click === "function"){
+                oOptions.peek_element.click(oOptions.events.click);
+            }
         }
 
         /**
@@ -154,8 +158,8 @@ String.prototype.format = function () {
             objAnimate[oOptions.peek_position] = getHiddenOffset() + "px";
             jqPeekElement.animate(objAnimate, intDuration);
             jqPeekElement.data("hidden", "true");
-            if(typeof oOptions.close === "function"){
-                oOptions.close();
+            if(typeof oOptions.events.close === "function"){
+                oOptions.events.close();
             }
         }
 
@@ -165,8 +169,8 @@ String.prototype.format = function () {
             objAnimate[oOptions.peek_position] = getShownOffset() + "px";
             jqPeekElement.animate(objAnimate, intDuration);
             jqPeekElement.data("hidden", "false");
-            if(typeof oOptions.open === "function"){
-                oOptions.open();
+            if(typeof oOptions.events.open === "function"){
+                oOptions.events.open();
             }
         }
 

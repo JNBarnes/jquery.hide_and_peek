@@ -17,23 +17,17 @@
     <script>
         $(document).ready(function(){
             $("#peek-element").hide_and_peek("init", {
-                peek_position: "top"
-            });
-            $("#peek-element").click(function(evt){
-                $("#peek-element").hide_and_peek("toggle");
-            });
-
-            $("#peek-element2").hide_and_peek("init", {
-                peek_position: "bottom"
-            });
-            $("#peek-element2").click(function(evt){
-                $("#peek-element2").hide_and_peek("toggle");
+                peek_position: "top",
+                events:{
+                    click:function(evt){
+                        $(this).hide_and_peek("toggle");
+                    }
+                }
             });
         });
     </script>
 </head>
 <body style="min-height: 500px">
 <div id="peek-element"></div>
-<div id="peek-element2"></div>
 </body>
 </html>
