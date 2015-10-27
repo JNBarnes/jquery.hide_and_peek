@@ -26,12 +26,21 @@ String.prototype.format = function () {
             center: true
         };
 
-        var oOptions = $.fn.extend({}, $.fn.hide_and_peek.defaults, options);
+        $.fn.hide_and_peek.custom = function(){
+            if(typeof options === "undefined"){
+                return $.fn.hide_and_peek.custom;
+            }else{
+                return $.fn.extend($.fn.hide_and_peek.custom,options);
+            }
+        }();
+
+        var oOptions = $.fn.extend({}, $.fn.hide_and_peek.defaults, $.fn.hide_and_peek.custom);
+
         oOptions.peek_element = this;
 
         switch (action){
             case "init":
-                init(options);
+                init();
                 break;
             case "show":
                 showPeekElement(oOptions.peek_show_duration);
@@ -52,9 +61,7 @@ String.prototype.format = function () {
 
 
 
-        function init(options){
-
-            //oOptions = $.extend(oOptions, options);
+        function init(){
 
             $(oOptions.peek_element).css({
                     position: "absolute"
@@ -144,6 +151,9 @@ String.prototype.format = function () {
             objAnimate[oOptions.peek_position] = getHiddenOffset() + "px";
             jqPeekElement.animate(objAnimate, intDuration);
             jqPeekElement.data("hidden", "true");
+            if(typeof oOptions.close === "function"){
+                oOptions.close();
+            }
         }
 
         function showPeekElement(intDuration) {
@@ -152,6 +162,9 @@ String.prototype.format = function () {
             objAnimate[oOptions.peek_position] = getShownOffset() + "px";
             jqPeekElement.animate(objAnimate, intDuration);
             jqPeekElement.data("hidden", "false");
+            if(typeof oOptions.open === "function"){
+                oOptions.open();
+            }
         }
 
         function getPeekDepth(){

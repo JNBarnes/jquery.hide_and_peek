@@ -11,12 +11,13 @@
             width: 300px;
             height: 300px;
             position: absolute;
-
         }
     </style>
     <script>
         $(document).ready(function(){
-            $("#peek-element").hide_and_peek("init");
+            $("#peek-element").hide_and_peek("init", {
+                peek_position: "top"
+            });
             $("#peek-element").click(function(evt){
                 $("#peek-element").hide_and_peek("toggle");
             });
