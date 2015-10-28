@@ -13,7 +13,6 @@ String.prototype.format = function () {
 };
 
 $.widget("jnb.hide_and_peek", {
-
     // Default options.
     options: {
         peek_offset: -10,
@@ -29,14 +28,12 @@ $.widget("jnb.hide_and_peek", {
                 position: "absolute"
             }
         );
-
         if (this.options.center) {
             this._centerPeekElement();
             $(window).resize(function () {
                 this._centerPeekElement();
             });
         }
-
         if (this.options.default_shown) {
             this.show(0);
         } else {
@@ -46,7 +43,6 @@ $.widget("jnb.hide_and_peek", {
         if (this.options.peek_position == "bottom" || this.options.peek_position == "right") {
             this._wrapPeekElement();
         }
-
         if (typeof this.options.events.click === "function") {
             this.element.click(this.options.events.click);
         }
@@ -72,11 +68,8 @@ $.widget("jnb.hide_and_peek", {
             };
         }
         jqPeekElement = this.element.detach();
-
         jqPeekWrapper.append(jqPeekElement);
-
         jqPeekWrapper.css(objWrapperCSS);
-
         jqPeekElement.css({
             left: "",
             bottom: "",
@@ -87,7 +80,6 @@ $.widget("jnb.hide_and_peek", {
     },
     _centerPeekElement: function () {
         var jqPeekElement = this.element;
-
         if (this.options.peek_position == "top" || this.options.peek_position == "bottom") {
             //center horizontally
             var intPeekWidth = parseInt(jqPeekElement.width());
@@ -107,7 +99,6 @@ $.widget("jnb.hide_and_peek", {
     _getPeekDepth: function () {
         var jqPeekElement = this.element;
         var intPeekDepth;
-
         if (this.options.peek_position == "top" || this.options.peek_position == "bottom") {
             intPeekDepth = parseInt(jqPeekElement.height());
         } else if (this.options.peek_position == "left" || this.options.peek_position == "right") {
@@ -167,14 +158,11 @@ $.widget("jnb.hide_and_peek", {
             intViewportWidth = $(window).width();
         } catch (ex) {
             // the more standards compliant browsers (mozilla/netscape/opera/IE7) use window.innerWidth and window.innerHeight
-
             if (typeof window.innerWidth != 'undefined') {
                 intViewportWidth = window.innerWidth;
                 intViewportHeight = window.innerHeight;
             }
-
             // IE6 in standards compliant mode (i.e. with a valid doc type as the first line in the document)
-
             else if (typeof document.documentElement != 'undefined' &&
                 typeof document.documentElement.clientWidth !=
                 'undefined' &&
@@ -182,15 +170,12 @@ $.widget("jnb.hide_and_peek", {
                 intViewportWidth = document.documentElement.clientWidth;
                 intViewportHeight = document.documentElement.clientHeight;
             }
-
             // older versions of IE
-
             else {
                 intViewportWidth = document.getElementsByTagName('body')[0].clientWidth;
                 intViewportHeight = document.getElementsByTagName('body')[0].clientHeight;
             }
         }
-
         return {
             "width": parseInt(intViewportWidth),
             "height": parseInt(intViewportHeight)
