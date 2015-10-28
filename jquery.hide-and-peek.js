@@ -196,7 +196,8 @@ $.widget("jnb.hide_and_peek", {
             "height": parseInt(intViewportHeight)
         };
     },
-    hide: function (intDuration) {
+    hide: function (duration) {
+        var intDuration = typeof duration === "undefined"? this.options.peek_hide_duration:duration;
         var jqPeekElement = this.element;
         var objAnimate = {}; //Cant use computed keys till ES2015 adopted
         objAnimate[this.options.peek_position] = this._getHiddenOffset() + "px";
@@ -206,7 +207,8 @@ $.widget("jnb.hide_and_peek", {
             this.options.events.close();
         }
     },
-    show: function (intDuration) {
+    show: function (duration) {
+        var intDuration = typeof duration === "undefined"? this.options.peek_show_duration:duration;
         var jqPeekElement = this.element;
         var objAnimate = {}; //Cant use computed keys till ES2015 adopted
         objAnimate[this.options.peek_position] = this._getShownOffset() + "px";
@@ -216,11 +218,11 @@ $.widget("jnb.hide_and_peek", {
             this.options.events.open();
         }
     },
-    toggle: function(){
+    toggle: function(duration){
         if(this._isPeekElementVisible()){
-            this.hide();
+            this.hide(duration);
         }else{
-            this.show();
+            this.show(duration);
         }
     }
 });

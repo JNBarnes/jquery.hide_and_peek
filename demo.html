@@ -15,15 +15,32 @@
             position: absolute;
         }
 
+        #peek-element2{
+            background-color: blue;
+            width: 300px;
+            height: 300px;
+            position: absolute;
+        }
+
     </style>
     <script>
-        var foo = {};
+        var jqTop = {};
+        var jqBottom = {};
         $(document).ready(function(){
-            foo = $("#peek-element").hide_and_peek({
+            jqTop = $("#peek-element").hide_and_peek({
                 peek_position:"top",
                 events:{
                     click: function(evt){
-                        foo.hide_and_peek("toggle");
+                        jqTop.hide_and_peek("toggle");
+                    }
+                }
+            });
+
+            jqBottom = $("#peek-element2").hide_and_peek({
+                peek_position:"bottom",
+                events:{
+                    click: function(evt){
+                        jqBottom.hide_and_peek("toggle");
                     }
                 }
             });
@@ -32,5 +49,6 @@
 </head>
 <body style="min-height: 500px">
 <div id="peek-element"></div>
+<div id="peek-element2"></div>
 </body>
 </html>
